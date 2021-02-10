@@ -8,7 +8,32 @@ basePath: "/service-api"
 schemes:
 - "http"
 paths:
-  /student:
+  /student/:
+    get:
+      summary: "gets all students"
+      description: "Returns all students with la"
+      operationId: "get_students"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "last_name"
+        in: "query"
+        description: "The last name"
+        required: false
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Student"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "student not found"
+      x-swagger-router-controller: "swagger_server.controllers.default_controller"
     post:
       summary: "Add a new student"
       description: ""
