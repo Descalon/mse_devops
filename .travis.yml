@@ -19,9 +19,8 @@ before_script:
 - npm --version
 - node_modules/.bin/newman --version
 script:
-- python -m unittest discover
-- docker build -t swagger-spring-example:1.0.0 .
-- docker run --name example_api -d -t -p 127.0.0.1:8080:8080 swagger-spring-example:1.0.0
+- docker build -t descalon/devops .
+- docker run --name example_api -d -t -p 127.0.0.1:8080:8080 descalon/devops:latest
 - docker ps
 - count=0 && until $(curl --output /dev/null --silent --head --fail http://localhost:8080);
   do printf '.' && sleep 3 && count=$((count+1)) && if [ $count -gt 5 ]; then break;
@@ -30,8 +29,8 @@ script:
 - node_modules/.bin/newman run tests/postman_collection.json -e tests/postman_environment.json
 after_success:
 - docker login -u $DOCKER_USER -p $DOCKER_PASS
-- docker tag my_docker_reposetory/swagger_server my_docker_reposetory/swagger_server
-- docker push my_docker_reposetory/swagger_server
+- docker tag descalon/devops descalon/devops
+- docker push descalon/devops
 env:
   global:
   - secure: UAbIUQrFTRIBqsIEPT2xxsKNUxdaNIXvDHvfql4JSrNWt3UN3uf2btGMEzux2tFYZEwAdndhCNswwTR37RRxIqDHI24CaujR5hq89nBvDMHy0RMDlh95DGLIhTSbT/XkRccG86+788SqV2UlRLqHmrVb2jbYuQAlOYh//9B587XjAPbbxre6ZiAXlEayHKJ62PNL/xH1zYQaF7sqxc5xu04WZglUwfhso+dJWElmQ/xG2ueF5KNd+39EPiAwGxi84aB1mQwtL/Odz5gE3PyJCdPbjPxebcRjvi1WYEUySiTYcFYVzlTMzkgRNQR/qt/Q27tdQE1wuWN2rSjAr0s8cxuYXJrwScmPQSFIjVw6G2JNl5aeKbHSjWN5z6AhF2ciQiDVo26ZZ/CSj2Wwkqob5JhRyS2Z4kma0b3aooyzT3aZk+Kyw4WJoB47wyXFemMKoytCH8u1yJvrC6Cx61MCqp82gqJN/xCWxhsQm/szsNrpP5uS+U4BqteDVvEvgMEy9ujPFkp6ewJ4o3Bi3ifmUqAzb3Ip9fSfMTJHD73MZiPsrhNGyU51k6Huf0/0Y6/mvHNngD92uK2FA3Am2IKyI83cCalLnG+PWloP6+ntK7KCser2l4jx8JZ+l96BV5jPLGMF3dgCXs7k6bossy85v4f6UnnHyD1u5jjum5+L7s4=
