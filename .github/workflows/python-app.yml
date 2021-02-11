@@ -27,6 +27,6 @@ jobs:
         pip install -r test-requirements.txt
         pip install nose
         pip install Flask-Testing
-    - name: Test with pytest
+    - name: Run tests
       run: |
-        pytest
+        python -m unittest
