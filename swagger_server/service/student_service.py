@@ -57,9 +57,4 @@ def delete_student(student_id):
 def get_student(last_name):
     if not last_name:
         return student_db.all()
-    queries = []
-    query = Query()
-    queries.append(query.last_name == last_name)
-    query = reduce(lambda a, b: a & b, queries)
-    res = student_db.search(query)
-    return res
+    return student_db.search(Query().last_name == last_name)

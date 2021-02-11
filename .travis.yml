@@ -18,6 +18,7 @@ before_script:
 - npm --version
 - node_modules/.bin/newman --version
 script:
+- python3 -m unittests
 - docker build -t descalon/devops .
 - docker run --name example_api -d -t -p 127.0.0.1:8080:8080 descalon/devops:latest
 - docker ps

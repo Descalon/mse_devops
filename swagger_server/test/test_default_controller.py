@@ -21,7 +21,7 @@ class TestDefaultController(BaseTestCase):
         body.last_name = names.get_last_name()
         body.grades = {'math': 8, 'history': 9}
         response = self.client.open(
-            '/service-api/student',
+            '/service-api/student/',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
@@ -38,22 +38,22 @@ class TestDefaultController(BaseTestCase):
         body.last_name = names.get_last_name()
         body.grades = {'math': 8, 'history': 9}
         response = self.client.open(
-            '/service-api/student',
+            '/service-api/student/',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
         student_id = (response.json)
-        # response = self.client.open(
-        #     '/service-api/student/{student_id}'.format(student_id=student_id),
-        #     method='DELETE')
-        # self.assert200(response,
-        #                'Response body is : ' + response.data.decode('utf-8'))
-        # 
-        # response = self.client.open(
-        #     '/service-api/student/{student_id}'.format(student_id=-1),
-        #     method='DELETE')
-        # self.assert404(response,
-        #                'Response body is : ' + response.data.decode('utf-8'))
+        response = self.client.open(
+            '/service-api/student/{student_id}'.format(student_id=student_id),
+            method='DELETE')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+        
+        response = self.client.open(
+            '/service-api/student/{student_id}'.format(student_id=-1),
+            method='DELETE')
+        self.assert404(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
 
     def test_get_student_by_id(self):
         """Test case for get_student_by_id
@@ -65,7 +65,7 @@ class TestDefaultController(BaseTestCase):
         body.last_name = names.get_last_name()
         body.grades = {'math': 8, 'history': 9}
         response = self.client.open(
-            '/service-api/student',
+            '/service-api/student/',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
